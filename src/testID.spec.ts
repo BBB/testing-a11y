@@ -4,8 +4,8 @@ const testValue = "title";
 const a11yValue = "a11y title";
 
 const map = new Map([
-  [testValue, testValue],
-  [a11yValue, a11yValue],
+  [testValue, [testValue]],
+  [a11yValue, [a11yValue]],
 ]);
 
 type Params = [string | undefined, string | undefined];
