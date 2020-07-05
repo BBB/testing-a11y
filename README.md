@@ -6,7 +6,7 @@ Some tools to make testing and accessibilty play a bit nicer
 
 ### TODO
 
-- [ ] Application of correct testID props for platform https://github.com/BBB/react-native-testing-a11y/issues/1
+- [ ] Application of correct testID props for platform [#1](/../../issues/1)
 - [ ] Application of correct a11y props for platform https://github.com/BBB/react-native-testing-a11y/issues/2
 - [ ] A11y/ test props can be mutually exclusive https://github.com/BBB/react-native-testing-a11y/issues/3
 - [ ] Alert when props are used on non-compatible Element https://github.com/BBB/react-native-testing-a11y/issues/4
