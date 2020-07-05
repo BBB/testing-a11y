@@ -1,0 +1,10 @@
+{
+  "name": "testing-a11y",
+  "version": "0.0.0",
+  "main": "index.js",
+  "author": "Ollie Relph <ollie@relph.me>",
+  "license": "MIT",
+  "devDependencies": {
+    "expo-cli": "^3.21.13"
+  }
+}
