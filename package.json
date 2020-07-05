@@ -4,9 +4,16 @@
   "main": "index.js",
   "author": "Ollie Relph <ollie@relph.me>",
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^14.0.14",
+    "rimraf": "^3.0.2"
+  },
   "dependencies": {
     "react-native": "^0.62.2",
     "typescript": "^3.9.6"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:clear": "rimraf build"
   }
 }
