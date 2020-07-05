@@ -1,15 +1,14 @@
-import { makeA11yOrTest } from "./a11yOrTest";
+import { a11yOrTest } from "./a11yOrTest";
 
-export const makeTestID = (
-  isAndroid: () => boolean,
-  isA11yMode: () => boolean
-) => (testID: string, allyLabel: string) => {
-  const a11yOrTest = makeA11yOrTest(isA11yMode);
-  const value = a11yOrTest(allyLabel, testID);
+export const testID = (isAndroid: () => boolean, isA11yMode: () => boolean) => (
+  testID: string,
+  allyLabel: string
+) => {
+  const value = a11yOrTest(isA11yMode)(testID, allyLabel);
   if (!value) {
     return {};
   }
   return isAndroid()
-    ? { accessible: true, accessibilityLabel: a11yOrTest(allyLabel, testID) }
-    : { testID: a11yOrTest(allyLabel, testID) };
+    ? { accessible: true, accessibilityLabel: value }
+    : { testID: value };
 };

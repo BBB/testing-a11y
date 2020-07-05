@@ -1,1 +1,1 @@
-export { makeTestID } from "./testID";
+export { testID as makeTestID } from "./testID";

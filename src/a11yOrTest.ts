@@ -1,7 +1,4 @@
-export const makeA11yOrTest = (a11yMode: () => boolean) => <
-  AllyValue,
-  TestValue
->(
-  allyValue: AllyValue,
-  testValue: TestValue
-) => (a11yMode() ? allyValue : testValue);
+export const a11yOrTest = (isA11yMode: () => boolean) => <TestValue, AllyValue>(
+  testValue: TestValue,
+  allyValue: AllyValue
+) => (isA11yMode() ? allyValue : testValue);

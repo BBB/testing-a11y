@@ -1,10 +1,10 @@
-import { makeTestID } from "./testID";
+import { testID } from "./testID";
 
-const notIsAndroid = makeTestID(
+const notIsAndroid = testID(
   () => false,
   () => false
 );
-const isAndroid = makeTestID(
+const isAndroid = testID(
   () => true,
   () => false
 );
