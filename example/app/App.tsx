@@ -1,11 +1,14 @@
 import React from 'react';
-import {StatusBar, StyleSheet, View} from 'react-native';
+import {StatusBar, StyleSheet, View, Text} from 'react-native';
+import {testID} from './lib/testID';
 
 const App = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <View></View>
+      <View>
+        <Text {...testID('title')}>My App</Text>
+      </View>
     </>
   );
 };

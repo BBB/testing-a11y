@@ -10,5 +10,6 @@ import App from '../app/App';
 import renderer from 'react-test-renderer';
 
 it('renders correctly', () => {
-  renderer.create(<App />);
+  const app = renderer.create(<App />);
+  expect(app.root.findByProps({testID: 'title'})).toBeDefined();
 });
