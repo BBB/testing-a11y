@@ -1,7 +1,9 @@
-import {makeTestID} from 'testing-a11y';
+import {makeTestID, getAllTestIdsForTestId} from 'testing-a11y';
 import {Platform} from 'react-native';
 
 declare const global: {TEST_MODE: boolean};
+
+export const getAllTestIds = getAllTestIdsForTestId();
 
 export const testIDAndA11y = makeTestID(
   () => Platform.OS === 'android',

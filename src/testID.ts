@@ -4,14 +4,18 @@ import { joinPrefix } from "./TestPrefixContext";
 
 const testIDToUUID = new Map<string, string[]>();
 
-const getUUID = (map = testIDToUUID) => (value: string, ix: number = 0) => {
-  const list = map.get(value) || [];
+const getUUID = (map = testIDToUUID) => (testID: string, ix: number = 0) => {
+  const list = getAllTestIdsForTestId(map)(testID);
   if (list[ix]) {
     return list[ix];
   }
-  map.set(value, [...list.slice(0, ix), v4(), ...list.slice(ix + 1)]);
-  return map.get(value)![ix];
+  map.set(testID, [...list.slice(0, ix), v4(), ...list.slice(ix + 1)]);
+  return map.get(testID)![ix];
 };
+
+export const getAllTestIdsForTestId = (map = testIDToUUID) => (
+  testID: string
+) => map.get(testID) || [];
 
 export const testID = (
   isAndroid: () => boolean,

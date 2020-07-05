@@ -1,2 +1,2 @@
-export { testID as makeTestID } from "./testID";
+export { testID as makeTestID, getAllTestIdsForTestId } from "./testID";
 export { TestIDPrefix } from "./TestPrefixContext";
