@@ -6,5 +6,8 @@
   "license": "MIT",
   "devDependencies": {
     "expo-cli": "^3.21.13"
+  },
+  "dependencies": {
+    "typescript": "^3.9.6"
   }
 }
