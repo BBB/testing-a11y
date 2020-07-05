@@ -20,4 +20,5 @@ it('renders correctly', () => {
   expect(
     app.getByTestId(testID('DifferentForm.SubmitButton').testID!),
   ).toBeTruthy();
+  expect(app.getByTestId(testID('TextItem', 0).testID!)).toBeTruthy();
 });

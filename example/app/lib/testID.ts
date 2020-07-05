@@ -8,5 +8,6 @@ export const testIDAndA11y = makeTestID(
   () => !global.TEST_MODE,
 );
 
-export const testID = (value: string) => testIDAndA11y(value, undefined);
+export const testID = (value: string, ix?: number) =>
+  testIDAndA11y(value, undefined, ix);
 export const a11yLabel = (value: string) => testIDAndA11y(undefined, value);

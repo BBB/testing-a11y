@@ -8,6 +8,13 @@ const App = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
+      {Array.from(new Array(5)).map((_, ix) => {
+        return (
+          <Text key={ix} {...testID('TextItem', ix)}>
+            Text {ix + 1}
+          </Text>
+        );
+      })}
       <View>
         <Text {...testIDAndA11y('title', 'App title')}>My App</Text>
         <Text {...testID('test only id')}>My App</Text>
