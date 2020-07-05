@@ -3,7 +3,10 @@ import {Platform} from 'react-native';
 
 declare const global: {TEST_MODE: boolean};
 
-export const testID = makeTestID(
+export const testIDAndA11y = makeTestID(
   () => Platform.OS === 'android',
   () => !global.TEST_MODE,
 );
+
+export const testID = (value: string) => testIDAndA11y(value, undefined);
+export const a11yLabel = (value: string) => testIDAndA11y(undefined, value);

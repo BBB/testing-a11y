@@ -1,23 +1,98 @@
 import { testID } from "./testID";
 
-const notIsAndroid = testID(
-  () => false,
-  () => false
-);
-const isAndroid = testID(
-  () => true,
-  () => false
-);
+const testValue = "title";
+const a11yValue = "a11y title";
 
-test("it should return testID when not android", () => {
-  expect(notIsAndroid("title", "a11y title")).toEqual({
-    testID: "title",
-  });
-});
+type Params = [string | undefined, string | undefined];
+type Case = {
+  isAndroid: boolean;
+  isA11y: boolean;
+  expected:
+    | {
+        accessibilityLabel: string;
+        accessible: boolean;
+      }
+    | {
+        testID: string;
+      }
+    | {};
+  params: Params;
+};
 
-test("it should return accessibilityLabel when android", () => {
-  expect(isAndroid("title", "a11y title")).toEqual({
-    accessibilityLabel: "title",
-    accessible: true,
-  });
+test.each(
+  [
+    {
+      isAndroid: true,
+      isA11y: false,
+    },
+    {
+      isAndroid: false,
+      isA11y: false,
+    },
+    {
+      isAndroid: true,
+      isA11y: true,
+    },
+    {
+      isAndroid: false,
+      isA11y: true,
+    },
+  ].reduce<Case[]>((agg, item) => {
+    agg.push({
+      ...item,
+      params: [testValue, a11yValue],
+      expected: item.isA11y
+        ? item.isAndroid
+          ? {
+              accessibilityLabel: a11yValue,
+              accessible: true,
+            }
+          : {
+              testID: a11yValue,
+            }
+        : item.isAndroid
+        ? {
+            accessibilityLabel: testValue,
+            accessible: true,
+          }
+        : {
+            testID: testValue,
+          },
+    });
+    agg.push({
+      ...item,
+      params: [testValue, undefined],
+      expected: item.isA11y
+        ? {}
+        : item.isAndroid
+        ? {
+            accessibilityLabel: testValue,
+            accessible: true,
+          }
+        : {
+            testID: testValue,
+          },
+    });
+    agg.push({
+      ...item,
+      params: [undefined, a11yValue],
+      expected: item.isAndroid
+        ? {
+            accessibilityLabel: a11yValue,
+            accessible: true,
+          }
+        : {
+            testID: a11yValue,
+          },
+    });
+
+    return agg;
+  }, [])
+)("it should apply the correct props %p", (args) => {
+  expect(
+    testID(
+      () => args.isAndroid,
+      () => args.isA11y
+    )(...args.params)
+  ).toEqual(args.expected);
 });

@@ -1,12 +1,15 @@
 import { a11yOrTest } from "./a11yOrTest";
 
 export const testID = (isAndroid: () => boolean, isA11yMode: () => boolean) => (
-  testID: string,
-  allyLabel: string
+  testID: string | undefined,
+  a11yLabel: string | undefined
 ) => {
-  const value = a11yOrTest(isA11yMode)(testID, allyLabel);
-  if (!value) {
-    return {};
+  let value = a11yLabel;
+  if ((!!testID && !!a11yLabel) || !!testID) {
+    value = a11yOrTest(isA11yMode)(testID, a11yLabel);
+    if (!value) {
+      return {};
+    }
   }
   return isAndroid()
     ? { accessible: true, accessibilityLabel: value }
