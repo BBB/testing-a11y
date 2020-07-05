@@ -21,16 +21,16 @@ const App = () => {
       })}
       <View>
         <Text {...a11yProps(titleID)}>My App</Text>
-        <Text {...a11yProps(title2ID)}>My App</Text>
-        <Text {...a11yLabel('A11y only label')}>My App</Text>
-        <SubmitButton onPress={() => void 0} />
+        <Text {...a11yProps(title2ID)}>Subheading</Text>
+        <Text {...a11yLabel('A11y only label')}>Description</Text>
+        <SubmitButton />
         <TestIDPrefix value="Form">
           <TestIDPrefix value="InnerForm">
-            <SubmitButton onPress={() => void 0} />
+            <SubmitButton />
           </TestIDPrefix>
         </TestIDPrefix>
         <TestIDPrefix value="DifferentForm">
-          <SubmitButton onPress={() => void 0} />
+          <SubmitButton />
         </TestIDPrefix>
       </View>
     </>

@@ -4,13 +4,11 @@ import {a11yBuilder, a11yProps} from '../lib/testID';
 
 export const submitButtonID = a11yBuilder('SubmitButton');
 
-export const SubmitButton: React.SFC<Pick<ButtonProps, 'onPress'>> = (
-  props,
-) => {
+export const SubmitButton: React.SFC<{}> = (props) => {
   return (
     <Button
       title={'Submit'}
-      onPress={props.onPress}
+      onPress={() => void 0}
       {...a11yProps(submitButtonID())}
     />
   );

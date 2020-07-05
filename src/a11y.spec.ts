@@ -1,4 +1,4 @@
-import { testID } from "./testID";
+import { a11yBoth } from "./a11y";
 
 const testValue = "title";
 const a11yValue = "a11y title";
@@ -95,7 +95,7 @@ test.each(
   }, [])
 )("it should apply the correct props %p", (args) => {
   expect(
-    testID(
+    a11yBoth(
       () => args.isAndroid,
       () => args.isA11y,
       map
