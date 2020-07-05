@@ -1,4 +1,4 @@
-import { a11yBoth } from "./a11y";
+import { a11yBoth, formatDefault } from "./a11y";
 
 const testValue = "title";
 const a11yValue = "a11y title";
@@ -10,7 +10,6 @@ const map = new Map([
 
 type Params = [string | undefined, string | undefined];
 type Case = {
-  isAndroid: boolean;
   isA11y: boolean;
   expected:
     | {
@@ -27,19 +26,9 @@ type Case = {
 test.each(
   [
     {
-      isAndroid: true,
       isA11y: false,
     },
     {
-      isAndroid: false,
-      isA11y: false,
-    },
-    {
-      isAndroid: true,
-      isA11y: true,
-    },
-    {
-      isAndroid: false,
       isA11y: true,
     },
   ].reduce<Case[]>((agg, item) => {
@@ -47,18 +36,8 @@ test.each(
       ...item,
       params: [testValue, a11yValue],
       expected: item.isA11y
-        ? item.isAndroid
-          ? {
-              accessibilityLabel: a11yValue,
-              accessible: true,
-            }
-          : {
-              testID: a11yValue,
-            }
-        : item.isAndroid
         ? {
-            accessibilityLabel: testValue,
-            accessible: true,
+            testID: a11yValue,
           }
         : {
             testID: testValue,
@@ -69,11 +48,6 @@ test.each(
       params: [testValue, undefined],
       expected: item.isA11y
         ? {}
-        : item.isAndroid
-        ? {
-            accessibilityLabel: testValue,
-            accessible: true,
-          }
         : {
             testID: testValue,
           },
@@ -81,24 +55,15 @@ test.each(
     agg.push({
       ...item,
       params: [undefined, a11yValue],
-      expected: item.isAndroid
-        ? {
-            accessibilityLabel: a11yValue,
-            accessible: true,
-          }
-        : {
-            testID: a11yValue,
-          },
+      expected: {
+        testID: a11yValue,
+      },
     });
 
     return agg;
   }, [])
 )("it should apply the correct props %p", (args) => {
   expect(
-    a11yBoth(
-      () => args.isAndroid,
-      () => args.isA11y,
-      map
-    )(...args.params)
+    a11yBoth(formatDefault(), () => args.isA11y, map)(...args.params)
   ).toEqual(args.expected);
 });

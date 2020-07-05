@@ -13,19 +13,36 @@ const getUUID = (map = testIDToUUID) => (value: string, ix: number = 0) => {
   return map.get(value)![ix];
 };
 
+const isUndefined = (arg: any): arg is undefined => {
+  return typeof arg === "undefined";
+};
+
 export const getAllTestIdsForTestId = (map = testIDToUUID) => (
   testID: string
 ) => map.get(testID) || [];
 
-export const a11yBoth = (
-  isAndroid: () => boolean,
+export const formatAndroid = () => (value: string | undefined) =>
+  isUndefined(value)
+    ? {}
+    : {
+        accessible: true,
+        accessibilityLabel: value,
+      };
+export const formatDefault = () => (value: string | undefined) =>
+  isUndefined(value) ? {} : { testID: value };
+
+export const a11yBoth = <
+  T extends (value: string | undefined) => any,
+  R = ReturnType<T>
+>(
+  propFormatter: T,
   isA11yMode: () => boolean,
   map?: typeof testIDToUUID
 ) => (
   testID: string | undefined,
   a11yLabel: string | undefined,
   ix?: number | undefined
-) => {
+): R => {
   let value = a11yLabel;
   if ((!!testID && !!a11yLabel) || !!testID) {
     const testIDAndPrefix = joinPrefix(testID);
@@ -33,13 +50,8 @@ export const a11yBoth = (
       getUUID(map)(testIDAndPrefix, ix),
       a11yLabel
     );
-    if (!value) {
-      return {};
-    }
   }
-  return isAndroid()
-    ? { accessible: true, accessibilityLabel: value }
-    : { testID: value };
+  return propFormatter(value);
 };
 
 export const a11yBuilder = (
@@ -56,8 +68,8 @@ export const a11yBuilder = (
     | undefined,
 });
 
-export const a11yProps = (
-  isAndroid: () => boolean,
+export const a11yProps = <T extends (value: string | undefined) => any>(
+  propFormatter: T,
   isA11yMode: () => boolean,
   map?: typeof testIDToUUID
 ) => (
@@ -66,22 +78,23 @@ export const a11yProps = (
     | ReturnType<ReturnType<typeof a11yBuilder>>
 ) => {
   const finished = typeof built === "function" ? built() : built;
-  return a11yBoth(isAndroid, isA11yMode, map)(
+  return a11yBoth(propFormatter, isA11yMode, map)(
     join(finished.prefix, finished.testID),
     finished.a11yLabel,
     finished.ix
   );
 };
 
-export const a11yID = (
-  isAndroid: () => boolean,
+export const a11yID = <T extends (value: string | undefined) => any>(
+  propFormatter: T,
   isA11yMode: () => boolean,
   map?: typeof testIDToUUID
-) => (...args: Parameters<ReturnType<typeof a11yProps>>) =>
-  a11yProps(isAndroid, isA11yMode, map)(...args).testID!;
+) => (value: string) =>
+  a11yBoth(propFormatter, isA11yMode, map)(value, undefined);
 
-export const a11yLabel = (
-  isAndroid: () => boolean,
+export const a11yLabel = <T extends (value: string | undefined) => any>(
+  propFormatter: T,
   isA11yMode: () => boolean,
   map?: typeof testIDToUUID
-) => (value: string) => a11yBoth(isAndroid, isA11yMode, map)(undefined, value);
+) => (value: string) =>
+  a11yBoth(propFormatter, isA11yMode, map)(undefined, value);
