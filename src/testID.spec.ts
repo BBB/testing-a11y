@@ -3,6 +3,11 @@ import { testID } from "./testID";
 const testValue = "title";
 const a11yValue = "a11y title";
 
+const map = new Map([
+  [testValue, testValue],
+  [a11yValue, a11yValue],
+]);
+
 type Params = [string | undefined, string | undefined];
 type Case = {
   isAndroid: boolean;
@@ -92,7 +97,8 @@ test.each(
   expect(
     testID(
       () => args.isAndroid,
-      () => args.isA11y
+      () => args.isA11y,
+      map
     )(...args.params)
   ).toEqual(args.expected);
 });
