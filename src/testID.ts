@@ -1,5 +1,6 @@
 import { a11yOrTest } from "./a11yOrTest";
 import { v4 } from "uuid";
+import { TestPrefixContext, join } from "./TestPrefixContext";
 
 const testIDToUUID = new Map<string, string>();
 
@@ -16,9 +17,13 @@ export const testID = (
   isA11yMode: () => boolean,
   map?: typeof testIDToUUID
 ) => (testID: string | undefined, a11yLabel: string | undefined) => {
+  const {
+    prefix,
+  } = (TestPrefixContext.Consumer as any)._context._currentValue2;
   let value = a11yLabel;
   if ((!!testID && !!a11yLabel) || !!testID) {
-    value = a11yOrTest(isA11yMode)(getUUID(map)(testID), a11yLabel);
+    const testIDAndPrefix = join(prefix, testID);
+    value = a11yOrTest(isA11yMode)(getUUID(map)(testIDAndPrefix), a11yLabel);
     if (!value) {
       return {};
     }
