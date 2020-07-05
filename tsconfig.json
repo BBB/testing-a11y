@@ -4,7 +4,7 @@
     "module": "es6",
     "moduleResolution": "node",
     "jsx": "react",
-    "outDir": "build",
+    "outDir": "dist",
     "rootDir": "src",
     "baseUrl": "src",
     "allowSyntheticDefaultImports": true,

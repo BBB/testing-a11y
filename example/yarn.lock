@@ -5883,7 +5883,7 @@ test-exclude@^5.2.3:
     read-pkg-up "^4.0.0"
     require-main-filename "^2.0.0"
 
-"testing-a11y@link:../build":
+"testing-a11y@link:../dist":
   version "0.0.0"
   uid ""
 

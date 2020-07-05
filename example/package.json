@@ -1,5 +1,5 @@
 {
-  "name": "TestingA11yExample",
+  "name": "testing-a11y-example",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,7 +12,7 @@
   "dependencies": {
     "react": "16.11.0",
     "react-native": "0.62.2",
-    "testing-a11y": "link:../build"
+    "testing-a11y": "link:../dist"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -43,7 +43,7 @@
       "node"
     ],
     "moduleNameMapper": {
-      "testing-a11y": "<rootDir>/../build/index.js"
+      "testing-a11y": "<rootDir>/../dist/index.js"
     }
   }
 }

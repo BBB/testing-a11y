@@ -1,7 +1,8 @@
 {
   "name": "testing-a11y",
   "version": "0.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "index.d.ts",
   "author": "Ollie Relph <ollie@relph.me>",
   "license": "MIT",
   "devDependencies": {
@@ -22,6 +23,7 @@
   "scripts": {
     "build": "tsc",
     "build:clear": "rimraf build",
-    "test": "jest"
+    "test": "jest",
+    "prepublish": "yarn build:clear && yarn build"
   }
 }
