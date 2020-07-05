@@ -2,7 +2,8 @@ import {render} from '@testing-library/react-native';
 import React from 'react';
 import 'react-native';
 import App, {textItemID, titleID} from './App';
-import {a11yID, getAllTestIds, testID} from './lib/testID';
+import {submitButtonID} from './components/SubmitButton';
+import {a11yID, getAllTestIds} from './lib/testID';
 
 declare const global: {TEST_MODE: boolean};
 global.TEST_MODE = true;
@@ -12,12 +13,10 @@ it('renders correctly', () => {
 
   expect(app.getByTestId(a11yID(titleID))).toBeTruthy();
   expect(
-    app.getByTestId(testID('Form.InnerForm.SubmitButton').testID!),
+    app.getByTestId(a11yID(submitButtonID('Form.InnerForm'))),
   ).toBeTruthy();
-  expect(app.getByTestId(testID('SubmitButton').testID!)).toBeTruthy();
-  expect(
-    app.getByTestId(testID('DifferentForm.SubmitButton').testID!),
-  ).toBeTruthy();
+  expect(app.getByTestId(a11yID(submitButtonID()))).toBeTruthy();
+  expect(app.getByTestId(a11yID(submitButtonID('DifferentForm')))).toBeTruthy();
   expect(app.getByTestId(a11yID(textItemID(0)))).toBeTruthy();
   const testIDs = getAllTestIds('TextItem');
   expect(testIDs).toHaveLength(5);

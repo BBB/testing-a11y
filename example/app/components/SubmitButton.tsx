@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {Button, ButtonProps} from 'react-native';
-import {testID} from '../lib/testID';
+import {a11yBuilder, a11yProps} from '../lib/testID';
+
+export const submitButtonID = a11yBuilder('SubmitButton');
 
 export const SubmitButton: React.SFC<Pick<ButtonProps, 'onPress'>> = (
   props,
@@ -9,7 +11,7 @@ export const SubmitButton: React.SFC<Pick<ButtonProps, 'onPress'>> = (
     <Button
       title={'Submit'}
       onPress={props.onPress}
-      {...testID('SubmitButton')}
+      {...a11yProps(submitButtonID())}
     />
   );
 };

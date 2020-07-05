@@ -1,6 +1,7 @@
 import * as React from "react";
 
-export const join = (...args: string[]) => args.filter(Boolean).join(".");
+export const join = (...args: (string | undefined)[]) =>
+  args.filter(Boolean).join(".");
 export const joinPrefix = (...args: string[]) =>
   [getPrefix(), ...args].filter(Boolean).join(".");
 
