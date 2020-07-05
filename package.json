@@ -4,9 +4,7 @@
   "main": "index.js",
   "author": "Ollie Relph <ollie@relph.me>",
   "license": "MIT",
-  "devDependencies": {
-    "expo-cli": "^3.21.13"
-  },
+  "devDependencies": {},
   "dependencies": {
     "typescript": "^3.9.6"
   }
