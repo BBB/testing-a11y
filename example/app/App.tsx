@@ -7,7 +7,7 @@ const App = () => {
     <>
       <StatusBar barStyle="dark-content" />
       <View>
-        <Text {...testID('title')}>My App</Text>
+        <Text {...testID('title', 'App title')}>My App</Text>
       </View>
     </>
   );
