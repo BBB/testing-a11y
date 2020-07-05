@@ -6,7 +6,7 @@ Some tools to make testing and accessibilty play a bit nicer
 
 ### TODO
 
-- [ ] Application of correct testID props for platform [#1](/../../issues/1)
+- [x] Application of correct testID props for platform [#1](/../../issues/1)
 - [ ] Application of correct a11y props for platform [#2](/../../issues/2)
 - [ ] A11y/ test props can be mutually exclusive [#3](/../../issues/3)
 - [ ] Alert when props are used on non-compatible Element [#4](/../../issues/4)
