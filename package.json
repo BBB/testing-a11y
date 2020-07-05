@@ -6,6 +6,7 @@
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
+    "react-native": "^0.62.2",
     "typescript": "^3.9.6"
   }
 }
