@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "react": "16.11.0",
-    "react-native": "0.62.2"
+    "react-native": "0.62.2",
+    "testing-a11y": "link:../build"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -39,6 +40,9 @@
       "jsx",
       "json",
       "node"
-    ]
+    ],
+    "moduleNameMapper": {
+      "testing-a11y": "<rootDir>/../build/index.js"
+    }
   }
 }
