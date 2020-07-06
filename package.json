@@ -25,6 +25,6 @@
     "build": "tsc",
     "build:clear": "rimraf build",
     "test": "jest",
-    "prepublish": "yarn build:clear && yarn build"
+    "prepare": "yarn build:clear && yarn build"
   }
 }
