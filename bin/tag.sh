@@ -19,7 +19,7 @@ fi
 
 echo "Releasing $VERSION"
 
-git commit --allow-empty -m "$VERSION"
+git commit --allow-empty -m "Release $VERSION"
 git tag $VERSION -m "Tagging version $VERSION for release"
 git push --tags
 git push
