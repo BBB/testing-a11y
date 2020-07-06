@@ -1,6 +1,6 @@
 {
   "name": "testing-a11y",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "dist/index.js",
   "types": "index.d.ts",
   "author": "Ollie Relph <ollie@relph.me>",
