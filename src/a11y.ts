@@ -44,7 +44,7 @@ export const a11yBoth = <
   ix?: number | undefined
 ): R => {
   let value = a11yLabel;
-  if ((!!testID && !!a11yLabel) || !!testID) {
+  if (!!testID) {
     const testIDAndPrefix = joinPrefix(testID);
     value = a11yOrTest(isA11yMode)(
       getUUID(map)(testIDAndPrefix, ix),
