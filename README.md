@@ -1,7 +1,7 @@
-<h2 align="center">react-native-testing-a11y</h2>
+<h2 align="center">testing-a11y</h2>
 
 <p align="center">
-Some tools to make testing and accessibilty play a bit nicer
+Some tools to make testing and accessibilty play a bit nicer with react/ react-native
 </p>
 
 ### TODO
