@@ -13,6 +13,7 @@ jobs:
         uses: actions/setup-node@master
         with:
           node-version: 12.16.1
+          registry-url: "https://registry.npmjs.org"
       - run: yarn install
       - run: npm publish
         env:
