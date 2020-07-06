@@ -13,15 +13,12 @@ const isUndefined = (arg: any): arg is undefined => {
   return typeof arg === 'undefined';
 };
 
-const testID = a11yProps(
-  (value) => {
-    if (isUndefined(value)) {
-      throw new Error('no testID');
-    }
-    return value;
-  },
-  () => false,
-);
+const testID = a11yProps((value) => {
+  if (isUndefined(value)) {
+    throw new Error('no testID');
+  }
+  return value.testID!;
+});
 
 it('renders correctly', () => {
   const app = render(<App />);

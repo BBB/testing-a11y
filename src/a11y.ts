@@ -1,6 +1,5 @@
 import { v4 } from "uuid";
-import { a11yOrTest } from "./a11yOrTest";
-import { joinPrefix, join } from "./TestPrefixContext";
+import { join, joinPrefix } from "./TestPrefixContext";
 
 const testIDToUUID = new Map<string, { uuid: string; indices: number[] }>();
 
@@ -40,42 +39,40 @@ export const getAllTestIdsForTestId = (map = testIDToUUID) => (
   }
   const uuid = list.uuid;
   if (list.indices.length === 1 && list.indices[0] === -1) {
-    return uuid;
+    return [uuid];
   }
   return list.indices.map((ix) => `${uuid}-${ix}`) || [];
 };
 
-export const formatAndroid = () => (value: string | undefined) =>
+export const formatReactNative = (
+  isA11y: () => boolean,
+  isAndroid: () => boolean
+) => (built: Built) => {
+  if (isA11y()) {
+    return formatA11y()(built.a11yLabel);
+  }
+  if (isAndroid()) {
+    return formatTestIDAndroid()(built.testID);
+  }
+  return formatTestIDDefault()(built.testID);
+};
+
+export const formatA11y = () => (value: string | undefined) =>
   isUndefined(value)
     ? {}
     : {
         accessible: true,
         accessibilityLabel: value,
       };
-export const formatDefault = () => (value: string | undefined) =>
+export const formatTestIDAndroid = () => formatA11y();
+export const formatTestIDDefault = () => (value: string | undefined) =>
   isUndefined(value) ? {} : { testID: value };
 
-export const a11yBoth = <
-  T extends (value: string | undefined) => any,
-  R = ReturnType<T>
->(
+export const a11y = <T extends (value: Built) => any, R = ReturnType<T>>(
   propFormatter: T,
-  isA11yMode: () => boolean,
   map?: typeof testIDToUUID
-) => (
-  testID: string | undefined,
-  a11yLabel: string | undefined,
-  ix?: number | undefined
-): R => {
-  let value = a11yLabel;
-  if (!!testID) {
-    const testIDAndPrefix = joinPrefix(testID);
-    value = a11yOrTest(isA11yMode)(
-      getUUID(map)(testIDAndPrefix, ix),
-      a11yLabel
-    );
-  }
-  return propFormatter(value);
+) => (built: Built): R => {
+  return propFormatter(built.finalise(map));
 };
 
 export const a11yBuilder = (
@@ -83,42 +80,67 @@ export const a11yBuilder = (
   a11yLabel?: string | undefined
 ) => (
   ...args: [string, number] | [number, string] | [number] | [string] | []
-) => ({
-  testID,
-  a11yLabel,
-  ix: Array.from(args).find((a) => typeof a === "number") as number | undefined,
-  prefix: Array.from(args).find((a) => typeof a === "string") as
-    | string
-    | undefined,
-});
-
-export const a11yProps = <T extends (value: string | undefined) => any>(
-  propFormatter: T,
-  isA11yMode: () => boolean,
-  map?: typeof testIDToUUID
-) => (
-  built:
-    | ReturnType<typeof a11yBuilder>
-    | ReturnType<ReturnType<typeof a11yBuilder>>
-) => {
-  const finished = typeof built === "function" ? built() : built;
-  return a11yBoth(propFormatter, isA11yMode, map)(
-    join(finished.prefix, finished.testID),
-    finished.a11yLabel,
-    finished.ix
+) =>
+  new Built(
+    testID,
+    a11yLabel,
+    Array.from(args).find((a) => typeof a === "number") as number | undefined,
+    Array.from(args).find((a) => typeof a === "string") as string | undefined
   );
+
+class Built {
+  constructor(
+    public testID: string | undefined,
+    public a11yLabel: string | undefined,
+    private ix: number | undefined,
+    private prefix: string | undefined,
+    private final = false
+  ) {}
+
+  static finalise(testID: string | undefined, a11yLabel: string | undefined) {
+    return new Built(testID, a11yLabel, undefined, undefined, true);
+  }
+
+  finalise(map?: typeof testIDToUUID) {
+    if (this.final) {
+      throw new Error("Already built");
+    }
+    const testID = !!this.testID
+      ? getUUID(map)(
+          joinPrefix(this.testID) === this.testID
+            ? join(this.prefix, this.testID)
+            : joinPrefix(this.testID),
+          this.ix
+        )
+      : undefined;
+    return Built.finalise(testID, this.a11yLabel);
+  }
+}
+
+type NotBuilt = ReturnType<typeof a11yBuilder>;
+type PossiblyBuilt = Built | NotBuilt;
+
+export const a11yProps = <T extends (value: Built) => any>(
+  propFormatter: T,
+  map?: typeof testIDToUUID
+) => (possiblyBuilt: PossiblyBuilt) => {
+  const built =
+    typeof possiblyBuilt === "function" ? possiblyBuilt() : possiblyBuilt;
+  return a11y(propFormatter, map)(built);
 };
 
-export const a11yID = <T extends (value: string | undefined) => any>(
+export const a11yID = <T extends (value: Built) => any>(
   propFormatter: T,
-  isA11yMode: () => boolean,
   map?: typeof testIDToUUID
-) => (value: string) =>
-  a11yBoth(propFormatter, isA11yMode, map)(value, undefined);
+) => (value: string) => a11yBoth(propFormatter, map)(value, undefined);
 
-export const a11yLabel = <T extends (value: string | undefined) => any>(
+export const a11yLabel = <T extends (value: Built) => any>(
   propFormatter: T,
-  isA11yMode: () => boolean,
   map?: typeof testIDToUUID
-) => (value: string) =>
-  a11yBoth(propFormatter, isA11yMode, map)(undefined, value);
+) => (value: string) => a11yBoth(propFormatter, map)(undefined, value);
+
+export const a11yBoth = <T extends (value: Built) => any>(
+  propFormatter: T,
+  map?: typeof testIDToUUID
+) => (testID: string | undefined, a11yLabel: string | undefined) =>
+  a11y(propFormatter, map)(a11yBuilder(testID, a11yLabel)());

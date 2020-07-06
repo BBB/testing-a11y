@@ -6,24 +6,23 @@ import {
   a11yLabel as _a11yLabel,
   a11yProps as _a11yProps,
   getAllTestIdsForTestId,
-  formatAndroid,
-  formatDefault,
+  formatReactNative,
 } from 'testing-a11y';
 
 declare const global: {TEST_MODE: boolean};
 
 export const getAllTestIds = getAllTestIdsForTestId();
 
-const formatSelection =
-  Platform.OS === 'android' ? formatAndroid() : formatDefault();
+const isAndroid = () => Platform.OS === 'android';
 const isTestMode = () => !global.TEST_MODE;
 
-export const a11yBoth = _a11yBoth(formatSelection, isTestMode);
+const formatter = formatReactNative(isTestMode, isAndroid);
+export const a11yBoth = _a11yBoth(formatter);
 
 export {a11yBuilder};
 
-export const a11yProps = _a11yProps(formatSelection, isTestMode);
+export const a11yProps = _a11yProps(formatter);
 
-export const a11yID = _a11yID(formatSelection, isTestMode);
+export const a11yID = _a11yID(formatter);
 
-export const a11yLabel = _a11yLabel(formatSelection, isTestMode);
+export const a11yLabel = _a11yLabel(formatter);
