@@ -1,4 +1,5 @@
-import { a11yBoth, formatReactNative } from "./a11y";
+import { a11yBoth } from "./applicators";
+import { formatReactNative } from "./formatters";
 
 const testValue = "title";
 const a11yValue = "a11y title";

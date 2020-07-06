@@ -1,12 +1,9 @@
+export { getAllTestIdsForTestId } from "./a11y";
 export {
-  a11yBoth,
-  a11yID,
-  a11yLabel,
-  a11yBuilder,
-  a11yProps,
-  getAllTestIdsForTestId,
   formatTestIDAndroid as formatAndroid,
   formatTestIDDefault as formatDefault,
   formatReactNative,
-} from "./a11y";
+} from "./formatters";
+export { a11yBoth, a11yID, a11yLabel, a11yProps } from "./applicators";
+export { a11yBuilder } from "./builder";
 export { TestIDPrefix } from "./TestPrefixContext";
