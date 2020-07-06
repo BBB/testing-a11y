@@ -2,15 +2,29 @@ import { v4 } from "uuid";
 import { a11yOrTest } from "./a11yOrTest";
 import { joinPrefix, join } from "./TestPrefixContext";
 
-const testIDToUUID = new Map<string, string[]>();
+const testIDToUUID = new Map<string, { uuid: string; indices: number[] }>();
 
-const getUUID = (map = testIDToUUID) => (value: string, ix: number = 0) => {
-  const list = getAllTestIdsForTestId(map)(value);
-  if (list[ix]) {
-    return list[ix];
+const DEFAULT_IX = -1;
+const getUUID = (map = testIDToUUID) => (
+  value: string,
+  ix: number = DEFAULT_IX
+) => {
+  const list = map.get(value);
+  if (list && list.indices.includes(ix)) {
+    if (ix === DEFAULT_IX) {
+      return list.uuid;
+    }
+    return `${list.uuid}-${ix}`;
   }
-  map.set(value, [...list.slice(0, ix), v4(), ...list.slice(ix + 1)]);
-  return map.get(value)![ix];
+  map.set(value, {
+    uuid: list?.uuid || v4(),
+    indices: [...(list?.indices || []), ix],
+  });
+  const uuid = map.get(value)!.uuid;
+  if (ix === DEFAULT_IX) {
+    return uuid;
+  }
+  return `${uuid}-${ix}`;
 };
 
 const isUndefined = (arg: any): arg is undefined => {
@@ -19,7 +33,17 @@ const isUndefined = (arg: any): arg is undefined => {
 
 export const getAllTestIdsForTestId = (map = testIDToUUID) => (
   testID: string
-) => map.get(testID) || [];
+) => {
+  const list = map.get(testID);
+  if (!list) {
+    throw new Error(`Nothing found for id: ${testID} in map: ${map}`);
+  }
+  const uuid = list.uuid;
+  if (list.indices.length === 1 && list.indices[0] === -1) {
+    return uuid;
+  }
+  return list.indices.map((ix) => `${uuid}-${ix}`) || [];
+};
 
 export const formatAndroid = () => (value: string | undefined) =>
   isUndefined(value)
