@@ -4,6 +4,8 @@ import { join, joinPrefix } from "./TestPrefixContext";
 export type TestIDs = Map<string, { uuid: string; indices: number[] }>;
 export const testIDToUUID: TestIDs = new Map();
 
+export const formatIx = (uuid: string, ix: number) => `${uuid}-${ix}`;
+
 const DEFAULT_IX = -1;
 const getUUID = (map = testIDToUUID) => (
   value: string,
@@ -14,7 +16,7 @@ const getUUID = (map = testIDToUUID) => (
     if (ix === DEFAULT_IX) {
       return list.uuid;
     }
-    return `${list.uuid}-${ix}`;
+    return formatIx(list.uuid, ix);
   }
   map.set(value, {
     uuid: list?.uuid || v4(),
@@ -24,7 +26,7 @@ const getUUID = (map = testIDToUUID) => (
   if (ix === DEFAULT_IX) {
     return uuid;
   }
-  return `${uuid}-${ix}`;
+  return formatIx(uuid, ix);
 };
 
 export const a11yBuilder = (
