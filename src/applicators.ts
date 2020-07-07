@@ -1,27 +1,27 @@
-import { PossiblyBuilt, Built, testIDToUUID, a11yBuilder } from "./builder";
 import { a11y } from "./a11y";
+import { A11y, a11yBuilder, PossiblyBuilt, TestIDs } from "./builder";
 
-export const a11yProps = <T extends (value: Built) => any>(
+export const a11yProps = <T extends (value: A11y) => any>(
   propFormatter: T,
-  map?: typeof testIDToUUID
+  map?: TestIDs
 ) => (possiblyBuilt: PossiblyBuilt) => {
   const built =
     typeof possiblyBuilt === "function" ? possiblyBuilt() : possiblyBuilt;
   return a11y(propFormatter, map)(built);
 };
 
-export const a11yID = <T extends (value: Built) => any>(
+export const a11yID = <T extends (value: A11y) => any>(
   propFormatter: T,
-  map?: typeof testIDToUUID
+  map?: TestIDs
 ) => (value: string) => a11yBoth(propFormatter, map)(value, undefined);
 
-export const a11yLabel = <T extends (value: Built) => any>(
+export const a11yLabel = <T extends (value: A11y) => any>(
   propFormatter: T,
-  map?: typeof testIDToUUID
+  map?: TestIDs
 ) => (value: string) => a11yBoth(propFormatter, map)(undefined, value);
 
-export const a11yBoth = <T extends (value: Built) => any>(
+export const a11yBoth = <T extends (value: A11y) => any>(
   propFormatter: T,
-  map?: typeof testIDToUUID
+  map?: TestIDs
 ) => (testID: string | undefined, a11yLabel: string | undefined) =>
   a11y(propFormatter, map)(a11yBuilder(testID, a11yLabel)());

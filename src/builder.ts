@@ -1,10 +1,8 @@
 import { v4 } from "uuid";
 import { join, joinPrefix } from "./TestPrefixContext";
 
-export const testIDToUUID = new Map<
-  string,
-  { uuid: string; indices: number[] }
->();
+export type TestIDs = Map<string, { uuid: string; indices: number[] }>;
+export const testIDToUUID: TestIDs = new Map();
 
 const DEFAULT_IX = -1;
 const getUUID = (map = testIDToUUID) => (
@@ -35,14 +33,14 @@ export const a11yBuilder = (
 ) => (
   ...args: [string, number] | [number, string] | [number] | [string] | []
 ) =>
-  new Built(
+  new A11y(
     testID,
     a11yLabel,
     Array.from(args).find((a) => typeof a === "number") as number | undefined,
     Array.from(args).find((a) => typeof a === "string") as string | undefined
   );
 
-export class Built {
+export class A11y {
   constructor(
     public testID: string | undefined,
     public a11yLabel: string | undefined,
@@ -52,10 +50,10 @@ export class Built {
   ) {}
 
   static finalise(testID: string | undefined, a11yLabel: string | undefined) {
-    return new Built(testID, a11yLabel, undefined, undefined, true);
+    return new A11y(testID, a11yLabel, undefined, undefined, true);
   }
 
-  finalise(map?: typeof testIDToUUID) {
+  finalise(map?: TestIDs) {
     if (this.final) {
       throw new Error("Already built");
     }
@@ -67,9 +65,9 @@ export class Built {
           this.ix
         )
       : undefined;
-    return Built.finalise(testID, this.a11yLabel);
+    return A11y.finalise(testID, this.a11yLabel);
   }
 }
 
 export type NotBuilt = ReturnType<typeof a11yBuilder>;
-export type PossiblyBuilt = Built | NotBuilt;
+export type PossiblyBuilt = A11y | NotBuilt;

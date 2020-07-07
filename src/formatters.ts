@@ -1,4 +1,4 @@
-import { Built } from "./builder";
+import { A11y } from "./builder";
 
 const isUndefined = (arg: any): arg is undefined => {
   return typeof arg === "undefined";
@@ -7,7 +7,7 @@ const isUndefined = (arg: any): arg is undefined => {
 export const formatReactNative = (
   isA11y: () => boolean,
   isAndroid: () => boolean
-) => (built: Built) => {
+) => (built: A11y) => {
   if (isA11y()) {
     return formatA11y()(built.a11yLabel);
   }

@@ -1,4 +1,4 @@
-import { testIDToUUID, Built } from "./builder";
+import { testIDToUUID, A11y, TestIDs } from "./builder";
 
 export const getAllTestIdsForTestId = (map = testIDToUUID) => (
   testID: string
@@ -14,9 +14,9 @@ export const getAllTestIdsForTestId = (map = testIDToUUID) => (
   return list.indices.map((ix) => `${uuid}-${ix}`) || [];
 };
 
-export const a11y = <T extends (value: Built) => any, R = ReturnType<T>>(
+export const a11y = <T extends (value: A11y) => any, R = ReturnType<T>>(
   propFormatter: T,
-  map?: typeof testIDToUUID
-) => (built: Built): R => {
+  map?: TestIDs
+) => (built: A11y): R => {
   return propFormatter(built.finalise(map));
 };
