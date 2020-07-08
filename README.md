@@ -6,47 +6,52 @@ Some tools to make testing and accessibilty play a bit nicer with react/ react-n
 
 ### Example
 
+You have a component that you'd like to test in the simulator using something like appium or detox.
+
 ```typescript
 import * as React from "react";
 import { StatusBar, StyleSheet, Text, View } from "react-native";
-import { TestIDPrefix } from "testing-a11y";
-import { SubmitButton } from "./components/SubmitButton";
-import { a11yLabel, a11yBuilder, a11yProps } from "./lib/testID";
 
-export const titleID = a11yBuilder("title", "App title");
-export const title2ID = a11yBuilder("test only id");
-export const textItemID = a11yBuilder("TextItem");
-
-const App = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      {Array.from(new Array(5)).map((_, ix) => {
-        return (
-          <Text key={ix} {...a11yProps(textItemID(ix))}>
-            Text {ix + 1}
-          </Text>
-        );
-      })}
-      <View>
-        <Text {...a11yProps(titleID)}>My App</Text>
-        <Text {...a11yProps(title2ID)}>Subheading</Text>
-        <Text {...a11yLabel("A11y only label")}>Description</Text>
-        <SubmitButton />
-        <TestIDPrefix value="Form">
-          <TestIDPrefix value="InnerForm">
-            <SubmitButton />
-          </TestIDPrefix>
-        </TestIDPrefix>
-        <TestIDPrefix value="DifferentForm">
-          <SubmitButton />
-        </TestIDPrefix>
-      </View>
-    </>
-  );
-};
-
-const styles = StyleSheet.create({});
-
-export default App;
+export default () => (
+  <>
+    <Text>Label</Text>
+    <Text>£50.00</Text>
+  </>
+);
 ```
+
+So you add a testID
+
+```typescript
+import * as React from "react";
+import { StatusBar, StyleSheet, Text, View } from "react-native";
+
+export default () => (
+  <>
+    <Text>Label</Text>
+    <Text testID="amount">£50.00</Text>
+  </>
+);
+```
+
+But then you realise that you need to pass separate props for android
+
+```typescript
+import * as React from "react";
+import { StatusBar, StyleSheet, Text, View } from "react-native";
+
+export default () => (
+  <>
+    <Text>Label</Text>
+    <Text testID="amount" accessible={true} accessibilityLabel="amount">
+      £50.00
+    </Text>
+  </>
+);
+```
+
+And now you realise that it's 2020 and ignoring a11y just isn't acceptable anymore.
+
+You'll now need a flag for when to render a testID and when to render the real a11y label. Then if you want to test it, you'll either end up hard coding the value, or sharing a variable.
+
+Enter `testing-a11y`!
