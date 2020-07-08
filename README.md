@@ -111,3 +111,68 @@ export default () => (
 ```
 
 Much simpler! The library takes care of the platform/ a11y switching for you, and allows you to store one reference for testID and a11yLabels in a single place.
+
+Want a unique id for an item in a list? `testing-a11y` can do that too, simply call `amountID(ix)` instead of passing it:
+
+```typescript
+import * as React from "react";
+import { Text } from "react-native";
+import { a11yLabel, a11yBuilder, a11yProps } from "./lib/testID";
+
+export const amountID = a11yBuilder("amount", "The price of the item");
+
+export default (props) => (
+  <>
+    {props.items.map((item, ix) => {
+      return (
+        <Text>{item.name}</Text>
+        <Text {...a11yProps(amountID(ix))}>{item.amount}</Text>
+      )
+    })}
+  </>
+);
+```
+
+Imagine you have a common component used all over your app. Each time you use it, because you want it to be easily selectable, you end up passing a differentiating string through to the component to add to the test.
+
+`testing-a11y` simplifies this by allowing you to wrap components. Everything inside the wrapper will have the prefix added to it's testID!
+
+```typescript
+import * as React from "react";
+import { Text, Button } from "react-native";
+import { a11yLabel, a11yBuilder, a11yProps } from "./lib/testID";
+
+export const submitButtonID = a11yBuilder("SubmitButton");
+
+export const SubmitButton: React.SFC<{}> = (props) => {
+  return (
+    <Button
+      title={"Submit"}
+      onPress={() => void 0}
+      {...a11yProps(submitButtonID())}
+    />
+  );
+};
+
+export default (props) => (
+  <>
+    <TestIDPrefix value="Form">
+      <TestIDPrefix value="InnerForm">
+        <SubmitButton />
+      </TestIDPrefix>
+    </TestIDPrefix>
+    <TestIDPrefix value="DifferentForm">
+      <SubmitButton />
+    </TestIDPrefix>
+  </>
+);
+```
+
+You can now select the two different buttons with:
+
+```typescript
+const firstButton = submitButtonID("Form.InnerForm");
+const otherButton = submitButtonID("DifferentForm");
+```
+
+Much cleaner!
