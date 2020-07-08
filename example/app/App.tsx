@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {StatusBar, StyleSheet, Text, View} from 'react-native';
+import {StatusBar, Text, View} from 'react-native';
 import {TestIDPrefix} from 'testing-a11y';
 import {SubmitButton} from './components/SubmitButton';
-import {a11yLabel, a11yBuilder, a11yProps} from './lib/testID';
+import {a11yBuilder, a11yLabel, a11yProps} from './lib/testID';
 
 export const titleID = a11yBuilder('title', 'App title');
 export const title2ID = a11yBuilder('test only id');
@@ -36,7 +36,5 @@ const App = () => {
     </>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default App;
