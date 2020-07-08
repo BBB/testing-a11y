@@ -50,7 +50,7 @@ export default () => (
 );
 ```
 
-Now you need to share a reference to the testID with you integration tests
+Now you need to share a reference to the testID with your integration tests
 
 ```typescript
 import * as React from "react";
@@ -68,7 +68,7 @@ export default () => (
 );
 ```
 
-And now you realise that it's 2020 and ignoring a11y just isn't acceptable anymore. You'll now need a flag for when to render a testID and when to render the real a11y label.
+Uh-oh! it's 2020 and ignoring accessibilty issues just isn't ok. You'll now need a flag for when to render a testID and when to render the real a11y label.
 
 ```typescript
 import * as React from "react";
