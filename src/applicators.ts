@@ -1,5 +1,5 @@
 import { a11y } from "./a11y";
-import { A11y, a11yBuilder, PossiblyBuilt, TestIDs } from "./builder";
+import { A11y, a11yOf, PossiblyBuilt, TestIDs } from "./builder";
 
 export const a11yProps = <T extends (value: A11y) => any>(
   propFormatter: T,
@@ -24,4 +24,4 @@ export const a11yBoth = <T extends (value: A11y) => any>(
   propFormatter: T,
   map?: TestIDs
 ) => (testID: string | undefined, a11yLabel: string | undefined) =>
-  a11y(propFormatter, map)(a11yBuilder(testID, a11yLabel)());
+  a11y(propFormatter, map)(a11yOf(testID, a11yLabel)());

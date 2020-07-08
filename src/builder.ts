@@ -29,7 +29,7 @@ const getUUID = (map = testIDToUUID) => (
   return formatIx(uuid, ix);
 };
 
-export const a11yBuilder = (
+export const a11yOf = (
   testID: string | undefined,
   a11yLabel?: string | undefined
 ) => (
@@ -71,5 +71,5 @@ export class A11y {
   }
 }
 
-export type NotBuilt = ReturnType<typeof a11yBuilder>;
+export type NotBuilt = ReturnType<typeof a11yOf>;
 export type PossiblyBuilt = A11y | NotBuilt;

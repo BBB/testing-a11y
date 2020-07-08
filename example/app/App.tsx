@@ -2,11 +2,11 @@ import * as React from 'react';
 import {StatusBar, Text, View} from 'react-native';
 import {TestIDPrefix} from 'testing-a11y';
 import {SubmitButton} from './components/SubmitButton';
-import {a11yBuilder, a11yLabel, a11yProps} from './lib/testID';
+import {a11yOf, a11yLabel, a11yProps} from './lib/testID';
 
-export const titleID = a11yBuilder('title', 'App title');
-export const title2ID = a11yBuilder('test only id');
-export const textItemID = a11yBuilder('TextItem');
+export const titleID = a11yOf('title', 'App title');
+export const title2ID = a11yOf('test only id');
+export const textItemID = a11yOf('TextItem');
 
 const App = () => {
   return (

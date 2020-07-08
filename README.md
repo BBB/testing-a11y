@@ -98,9 +98,9 @@ Enter `testing-a11y`!
 ```typescript
 import * as React from "react";
 import { Text } from "react-native";
-import { a11yLabel, a11yBuilder, a11yProps } from "./lib/testID";
+import { a11yLabel, a11yOf, a11yProps } from "./lib/testID";
 
-export const amountID = a11yBuilder("amount", "The price of the item");
+export const amountID = a11yOf("amount", "The price of the item");
 
 export default () => (
   <>
@@ -117,9 +117,9 @@ Want a unique id for an item in a list? `testing-a11y` can do that too, simply c
 ```typescript
 import * as React from "react";
 import { Text } from "react-native";
-import { a11yLabel, a11yBuilder, a11yProps } from "./lib/testID";
+import { a11yLabel, a11yOf, a11yProps } from "./lib/testID";
 
-export const amountID = a11yBuilder("amount", "The price of the item");
+export const amountID = a11yOf("amount", "The price of the item");
 
 export default (props) => (
   <>
@@ -140,9 +140,9 @@ Imagine you have a common component used all over your app. Each time you use it
 ```typescript
 import * as React from "react";
 import { Text, Button } from "react-native";
-import { a11yLabel, a11yBuilder, a11yProps } from "./lib/testID";
+import { a11yLabel, a11yOf, a11yProps } from "./lib/testID";
 
-export const submitButtonID = a11yBuilder("SubmitButton");
+export const submitButtonID = a11yOf("SubmitButton");
 
 export const SubmitButton: React.SFC<{}> = (props) => {
   return (
