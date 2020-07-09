@@ -9,11 +9,6 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "monthly"
-
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/example" # Location of package manifests
-    schedule:
-      interval: "monthly"
       
   - package-ecosystem: "github-actions"
     directory: "/"
