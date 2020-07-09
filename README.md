@@ -171,8 +171,12 @@ export default (props) => (
 You can now select the two different buttons with:
 
 ```typescript
-const firstButton = submitButtonID("Form.InnerForm");
-const otherButton = submitButtonID("DifferentForm");
+import {a11yProps} from 'testing-a11y';
+
+const testID = a11yProps((value) => value.testID!);
+
+const firstButton = testID(submitButtonID("Form.InnerForm"));
+const otherButton = testID(submitButtonID("DifferentForm"));
 ```
 
 Much cleaner!
