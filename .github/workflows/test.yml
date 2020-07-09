@@ -24,7 +24,10 @@ jobs:
         run: yarn test
       - name: Build
         run: yarn build
-      - name: Install example app modules
+      - name: Install modules
         run: cd example && yarn install
       - name: Run tests example app
         run: cd example && yarn test
+      - name: Build Android Release
+        run: |
+          cd example/android && ./gradlew assembleDebug
