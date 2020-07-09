@@ -13,12 +13,11 @@
     "@types/uuid": "^8.0.0",
     "react": "^16.13.1",
     "rimraf": "^3.0.2",
-    "ts-jest": "^26.1.1"
+    "ts-jest": "^26.1.1",
+    "jest": "^26.1.0",
+    "typescript": "^3.9.6"
   },
   "dependencies": {
-    "jest": "^26.1.0",
-    "react-native": "^0.62.2",
-    "typescript": "^3.9.6",
     "uuid": "^8.2.0"
   },
   "scripts": {
