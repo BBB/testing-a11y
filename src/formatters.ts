@@ -7,7 +7,7 @@ const isUndefined = (arg: any): arg is undefined => {
 export const formatReactNative = (
   isA11y: () => boolean,
   isAndroid: () => boolean
-) => (built: A11y) => {
+) => (built: A11y<any>) => {
   if (isA11y()) {
     return formatA11y()(built.a11yLabel);
   }

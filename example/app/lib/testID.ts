@@ -1,10 +1,9 @@
 import {Platform} from 'react-native';
 import {
   a11yBoth as _a11yBoth,
-  a11yOf,
+  a11yOf as _a11yOf,
   a11yID as _a11yID,
   a11yLabel as _a11yLabel,
-  a11yProps as _a11yProps,
   getAllTestIdsForTestId,
   formatReactNative,
 } from 'testing-a11y';
@@ -19,9 +18,7 @@ const isTestMode = () => !global.TEST_MODE;
 const formatter = formatReactNative(isTestMode, isAndroid);
 export const a11yBoth = _a11yBoth(formatter);
 
-export {a11yOf};
-
-export const a11yProps = _a11yProps(formatter);
+export const a11yOf = _a11yOf(formatter);
 
 export const a11yID = _a11yID(formatter);
 

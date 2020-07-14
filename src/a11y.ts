@@ -1,4 +1,4 @@
-import { testIDToUUID, A11y, TestIDs, formatIx } from "./builder";
+import { formatIx, testIDToUUID } from "./builder";
 
 export const getAllTestIdsForTestId = (map = testIDToUUID) => (
   testID: string
@@ -12,11 +12,4 @@ export const getAllTestIdsForTestId = (map = testIDToUUID) => (
     return [uuid];
   }
   return list.indices.map((ix) => formatIx(uuid, ix)) || [];
-};
-
-export const a11y = <T extends (value: A11y) => any, R = ReturnType<T>>(
-  propFormatter: T,
-  map?: TestIDs
-) => (built: A11y): R => {
-  return propFormatter(built.finalise(map));
 };
