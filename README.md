@@ -45,7 +45,7 @@ export const amountID = a11yOf("amount", "The price of the item");
 export default () => (
   <>
     <Text>Label</Text>
-    <Text {...a11yProps(amountID)}>£50.00</Text>
+    <Text {...amountID.asProps()}>£50.00</Text>
   </>
 );
 ```
@@ -57,7 +57,7 @@ Want a unique id for an item in a list? `testing-a11y` can do that too, simply c
 ```typescript
 import * as React from "react";
 import { Text } from "react-native";
-import { a11yLabel, a11yOf, a11yProps } from "./lib/testID";
+import { a11yLabel, a11yOf } from "./lib/testID";
 
 export const amountID = a11yOf("amount", "The price of the item");
 
@@ -66,7 +66,7 @@ export default (props) => (
     {props.items.map((item, ix) => {
       return (
         <Text>{item.name}</Text>
-        <Text {...a11yProps(amountID(ix))}>{item.amount}</Text>
+        <Text {...amountID(ix).asProps()}>{item.amount}</Text>
       )
     })}
   </>
@@ -80,7 +80,7 @@ Imagine you have a common component used all over your app. Each time you use it
 ```typescript
 import * as React from "react";
 import { Text, Button } from "react-native";
-import { a11yLabel, a11yOf, a11yProps } from "./lib/testID";
+import { a11yLabel, a11yOf } from "./lib/testID";
 
 export const submitButtonID = a11yOf("SubmitButton");
 
@@ -89,7 +89,7 @@ export const SubmitButton: React.SFC<{}> = (props) => {
     <Button
       title={"Submit"}
       onPress={() => void 0}
-      {...a11yProps(submitButtonID())}
+      {...submitButtonID().asProps()}
     />
   );
 };
@@ -113,10 +113,8 @@ You can now select the two different buttons with:
 ```typescript
 import { a11yProps } from "testing-a11y";
 
-const testID = a11yProps((value) => value.testID!);
-
-const firstButton = testID(submitButtonID("Form.InnerForm"));
-const otherButton = testID(submitButtonID("DifferentForm"));
+const firstButton = submitButtonID("Form.InnerForm").asTestID();
+const otherButton = submitButtonID("DifferentForm").asTestID();
 ```
 
 Much cleaner!
