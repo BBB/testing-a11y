@@ -8,67 +8,7 @@ Some tools to make testing and accessibilty play a bit nicer with react/ react-n
 
 You have a component that you'd like to write integration tests for in the simulator using something like appium or detox.
 
-```typescript
-import * as React from "react";
-import { Text } from "react-native";
-
-export default () => (
-  <>
-    <Text>Label</Text>
-    <Text>£50.00</Text>
-  </>
-);
-```
-
-So you add a testID
-
-```typescript
-import * as React from "react";
-import { Text } from "react-native";
-
-export default () => (
-  <>
-    <Text>Label</Text>
-    <Text testID="amount">£50.00</Text>
-  </>
-);
-```
-
-But then you realise that you need to pass separate props for android
-
-```typescript
-import * as React from "react";
-import { Text } from "react-native";
-
-export default () => (
-  <>
-    <Text>Label</Text>
-    <Text testID="amount" accessible={true} accessibilityLabel="amount">
-      £50.00
-    </Text>
-  </>
-);
-```
-
-Now you need to share a reference to the testID with your integration tests
-
-```typescript
-import * as React from "react";
-import { Text } from "react-native";
-
-export const testID = "amount";
-
-export default () => (
-  <>
-    <Text>Label</Text>
-    <Text testID={testID} accessible={true} accessibilityLabel={testID}>
-      £50.00
-    </Text>
-  </>
-);
-```
-
-Uh-oh! it's 2020 and ignoring accessibilty issues just isn't ok. You'll now need a flag for when to render a testID and when to render the real a11y label.
+You've added accessibility, and platform specific code. It's alot to remember for each place you'd like an ID, or just some a11y text.
 
 ```typescript
 import * as React from "react";
@@ -171,7 +111,7 @@ export default (props) => (
 You can now select the two different buttons with:
 
 ```typescript
-import {a11yProps} from 'testing-a11y';
+import { a11yProps } from "testing-a11y";
 
 const testID = a11yProps((value) => value.testID!);
 
