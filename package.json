@@ -8,7 +8,7 @@
   "homepage": "https://github.com/BBB/testing-a11y",
   "devDependencies": {
     "@types/jest": "^26.0.3",
-    "@types/node": "^14.0.19",
+    "@types/node": "^14.14.22",
     "@types/react": "^16.9.41",
     "@types/uuid": "^8.0.0",
     "react": "^16.13.1",
